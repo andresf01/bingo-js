@@ -14,6 +14,7 @@ h1 {
 
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 100%;
 }
 
 .btnStart {
@@ -26,4 +27,13 @@ body {
 
 span {
   padding: 0 0.5rem;
+}
+
+.boards {
+  display: inline-flex;
+  flex-flow: wrap;
+}
+
+.board {
+  padding: 5px 10px;
 }

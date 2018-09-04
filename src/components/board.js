@@ -8,7 +8,7 @@ export default class Board extends React.Component {
   
   render(){
     return (
-      <div>
+      <div className="board">
         <p>{this.props.player.name}</p>
         <table>
           <thead>
@@ -22,14 +22,7 @@ export default class Board extends React.Component {
           </thead>
           <tbody>
             {this.props.player.numbers.map((row,i)=>{
-              if (i==0){
-                console.log(typeof this.props.numbers[0]);
-                row.map((col,j)=>{
-                  console.log(col);
-                  // console.log(this.props.numbers.includes(col));
-                });
-              }
-              return <tr key={i}>{row.map((col,j)=>(<td key={`${i}-${j}`}><Numero showed={this.props.numbers.includes(col[0])} number={col}/></td>))}</tr>;
+              return <tr key={i}>{row.map((col,j)=>(<td key={`${i}-${j}`}><Numero showed={this.props.numbers.includes(col)} number={col}/></td>))}</tr>;
             })}
           </tbody>
         </table>
