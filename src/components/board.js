@@ -1,4 +1,5 @@
 import React from 'react';
+import Numero from './numero';
 
 export default class Board extends React.Component {
   constructor(props){
@@ -21,7 +22,14 @@ export default class Board extends React.Component {
           </thead>
           <tbody>
             {this.props.player.numbers.map((row,i)=>{
-              return <tr key={i}>{row.map((col,j)=>(<td key={`${i}-${j}`}>{col}</td>))}</tr>;
+              if (i==0){
+                console.log(typeof this.props.numbers[0]);
+                row.map((col,j)=>{
+                  console.log(col);
+                  // console.log(this.props.numbers.includes(col));
+                });
+              }
+              return <tr key={i}>{row.map((col,j)=>(<td key={`${i}-${j}`}><Numero showed={this.props.numbers.includes(col[0])} number={col}/></td>))}</tr>;
             })}
           </tbody>
         </table>

@@ -1,3 +1,29 @@
 td {
   border :1px solid black;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+thead > tr > td {
+  font-weight: bold;
+}
+
+h1 {
+  text-align: center;
+}
+
+body {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.btnStart {
+  font-size: 1rem;
+}
+
+.ball__current {
+  color: red;
+}
+
+span {
+  padding: 0 0.5rem;
 }
