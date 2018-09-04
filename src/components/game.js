@@ -78,7 +78,8 @@ export default class Game extends React.Component {
   createNewPlayer(){
     let new_player = {
       name: document.getElementById('new_player__name').value,
-      numbers: generateBoardNumbers()
+      numbers: generateBoardNumbers(),
+      isWinner: false
     }
     document.getElementById('new_player__name').value = '';
     if (new_player.name == '')
@@ -98,8 +99,19 @@ export default class Game extends React.Component {
 
     for (let player of players){
       if (checkArrayIntoArray(player.numbers, numbers)){
-        console.log('full');
-        this.setState(()=>({ winner: true}));
+        // player.isWinner = true;
+        this.setState((prevState)=>({ 
+          winner: true,
+          players: prevState.players.map((e)=>{
+            if (e == player){
+              player.isWinner = true;
+              return player;
+            }
+            else{
+              return e;
+            }
+          })
+        }));
       }
     }
   }
@@ -145,7 +157,7 @@ export default class Game extends React.Component {
           <input placeholder="Name" id="new_player__name" ></input>
           <button onClick={this.createNewPlayer}>Add new player</button>
         </p>
-        <p>
+        <p className="boards">
           {this.state.numbers.map((e,i)=>{
             if (i+1 != this.state.numbers.length)
               return <span key={i}>{e}</span>

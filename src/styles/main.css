@@ -17,6 +17,10 @@ body {
   width: 100%;
 }
 
+html {
+  padding: 10px;
+}
+
 .btnStart {
   font-size: 1rem;
 }

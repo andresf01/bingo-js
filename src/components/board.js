@@ -9,7 +9,7 @@ export default class Board extends React.Component {
   render(){
     return (
       <div className="board">
-        <p>{this.props.player.name}</p>
+        <p className={this.props.player.isWinner && 'ball__current'}>{this.props.player.name}</p>
         <table>
           <thead>
             <tr>
