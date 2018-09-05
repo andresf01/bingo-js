@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Ball = props => (
-  <div style="color:red">{props.number}</div>
+  <span className={props.current && 'ball__current'}>{props.number}</span>
 )
 
 export default Ball;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './board';
+import Ball from './ball';
 
 let names = ['Paco','Ramon','James','Charlie'];
 let all_numbers = [];
@@ -63,7 +64,7 @@ export default class Game extends React.Component {
     this.createNewPlayer = this.createNewPlayer.bind(this);
     this.startGame = this.startGame.bind(this);
     this.generateBall = this.generateBall.bind(this);
-    this.stopGame = this.stopGame.bind(this);
+    this.pauseGame = this.pauseGame.bind(this);
     this.calculateWinner = this.calculateWinner.bind(this);
     // this.generateBoardNumbers = this.generateBoardNumbers.bind(this);
   }
@@ -138,8 +139,8 @@ export default class Game extends React.Component {
     }
   }
 
-  stopGame(){
-    this.setState((prevState)=>({winner: true}));
+  pauseGame(){
+    this.setState((prevState)=>({winner: !prevState.winner}));
   }
 
   componentDidMount(){
@@ -152,19 +153,22 @@ export default class Game extends React.Component {
       <div>
         <h1>Bingo JS</h1>
         {this.state.errors && <p>{this.state.errors}</p>}
-        <p><button className="btnStart" onClick={this.startGame}>Start game</button><button onClick={this.stopGame} >Stop game</button></p>
+        <p><button className="btnStart" onClick={this.startGame}>Start game</button>{ this.state.numbers.length > 0 && <button onClick={this.pauseGame} className="btnStart" >Pause game</button>}</p>
         <p>
           <input placeholder="Name" id="new_player__name" ></input>
           <button onClick={this.createNewPlayer}>Add new player</button>
         </p>
-        <p className="boards">
-          {this.state.numbers.map((e,i)=>{
-            if (i+1 != this.state.numbers.length)
-              return <span key={i}>{e}</span>
-            else
-              return <span key={i} className="ball__current">{e}</span>
-          })}
-        </p>
+        <div>
+          {this.state.numbers.length > 0 && <p>Total balotas: {this.state.numbers.length}</p>}
+          <p className="boards">
+            {this.state.numbers.map((e,i)=>{
+              if (i+1 != this.state.numbers.length)
+                return <Ball key={i} number={e} />
+              else
+                return <Ball key={i} number={e} current={true} />
+            })}
+          </p>
+        </div>
         <div className="boards">
           {this.state.players.map((item, index) => (<Board player={item} numbers={this.state.numbers} key={index} />))} 
         </div>

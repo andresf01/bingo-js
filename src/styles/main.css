@@ -27,10 +27,25 @@ html {
 
 .ball__current {
   color: red;
+  border-radius: 50%;
+  background-color: aquamarine;
+}
+
+.ball__marked {
+  color: black;
+  border-radius: 50%;
+  background-color: beige;
+}
+
+span > .ball__current {
+  padding: 5px 7px;
 }
 
 span {
-  padding: 0 0.5rem;
+  border-radius: 50%;
+  background-color: beige;
+  padding: 0.25rem 0.5rem;
+  margin: 0 0.5rem;
 }
 
 .boards {
@@ -40,4 +55,9 @@ span {
 
 .board {
   padding: 5px 10px;
+}
+
+.winner {
+  color: blue;
+  font-weight: bold;
 }
