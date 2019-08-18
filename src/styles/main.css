@@ -1,7 +1,11 @@
 td {
   border :1px solid black;
-  padding: 0.5rem;
   text-align: center;
+  padding: 0.25rem;
+}
+
+td > * {
+  padding: 0.75rem;
 }
 
 thead > tr > td {
@@ -19,10 +23,6 @@ body {
 
 html {
   padding: 10px;
-}
-
-.btnStart {
-  font-size: 1rem;
 }
 
 .ball__current {

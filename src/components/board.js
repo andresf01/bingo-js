@@ -1,5 +1,5 @@
 import React from 'react';
-import Numero from './numero';
+import Numero from './Numero';
 
 const Board = (props) => {
   return (
@@ -8,16 +8,26 @@ const Board = (props) => {
       <table>
         <thead>
           <tr>
-            <td>B</td>
-            <td>I</td>
-            <td>N</td>
-            <td>G</td>
-            <td>O</td>
+            <td><div>B</div></td>
+            <td><div>I</div></td>
+            <td><div>N</div></td>
+            <td><div>G</div></td>
+            <td><div>O</div></td>
           </tr>
         </thead>
         <tbody>
-          {props.player.numbers.map((row,i)=>{
-            return <tr key={i}>{row.map((col,j)=>(<td key={`${i}-${j}`}><Numero showed={props.numbers.includes(col)} current={props.numbers[props.numbers.length-1] == col} number={col}/></td>))}</tr>;
+          {props.player.numbers.map((row, i) => {
+            return (
+              <tr
+                key={i}
+              >
+                {row.map((col, j) => (
+                  <td key={`${i}-${j}`}>
+                    <Numero showed={props.numbers.includes(col)} current={props.numbers[props.numbers.length - 1] == col} number={col} />
+                  </td>
+                ))}
+              </tr>
+            )
           })}
         </tbody>
       </table>

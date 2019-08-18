@@ -1,8 +1,9 @@
 import React from 'react';
-import Board from './board';
-import Ball from './ball';
+import Board from './Board';
+import Ball from './Ball';
+import classnames from 'classnames'
 
-let names = ['Paco','Ramon','James','Charlie'];
+let names = ['Paco', 'Ramon', 'James', 'Charlie'];
 let all_numbers = [];
 
 const sleep = miliseconds => {
@@ -16,10 +17,10 @@ const sleep = miliseconds => {
  * @param {Array} arr1 
  * @param {Array} arr2 
  */
-const checkArrayIntoArray = (arr1, arr2) =>{
-  for (let row of arr1){
-    for (let item of row){
-      if (!arr2.includes(item) && item != 'X'){
+const checkArrayIntoArray = (arr1, arr2) => {
+  for (let row of arr1) {
+    for (let item of row) {
+      if (!arr2.includes(item) && item != 'X') {
         return false;
       }
     }
@@ -35,31 +36,31 @@ const generateBoardNumbers = () => {
   let letter_g = [];
   let letter_o = [];
 
-  for (let x = 0; x < 15; x++){
-    letter_b.push(x+1);
-    letter_i.push(x+16);
-    letter_n.push(x+31);
-    letter_g.push(x+46);
-    letter_o.push(x+61);
+  for (let x = 0; x < 15; x++) {
+    letter_b.push(x + 1);
+    letter_i.push(x + 16);
+    letter_n.push(x + 31);
+    letter_g.push(x + 46);
+    letter_o.push(x + 61);
   }
 
-  for (let x = 0; x < 5; x++ ){
+  for (let x = 0; x < 5; x++) {
     elements.push([]);
-    elements[x].push(letter_b.splice(Math.random()*letter_b.length, 1)[0]);
-    elements[x].push(letter_i.splice(Math.random()*letter_i.length, 1)[0]);
+    elements[x].push(letter_b.splice(Math.random() * letter_b.length, 1)[0]);
+    elements[x].push(letter_i.splice(Math.random() * letter_i.length, 1)[0]);
     if (x != 2)
-      elements[x].push(letter_n.splice(Math.random()*letter_n.length, 1)[0]);
+      elements[x].push(letter_n.splice(Math.random() * letter_n.length, 1)[0]);
     else
       elements[x].push('X');
-    elements[x].push(letter_g.splice(Math.random()*letter_g.length, 1)[0]);
-    elements[x].push(letter_o.splice(Math.random()*letter_o.length, 1)[0]);
+    elements[x].push(letter_g.splice(Math.random() * letter_g.length, 1)[0]);
+    elements[x].push(letter_o.splice(Math.random() * letter_o.length, 1)[0]);
   }
 
   return elements;
 }
 
 export default class Game extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.createNewPlayer = this.createNewPlayer.bind(this);
     this.startGame = this.startGame.bind(this);
@@ -75,8 +76,8 @@ export default class Game extends React.Component {
     winner: false,
     errors: ''
   }
-  
-  createNewPlayer(){
+
+  createNewPlayer() {
     let new_player = {
       name: document.getElementById('new_player__name').value,
       numbers: generateBoardNumbers(),
@@ -86,29 +87,29 @@ export default class Game extends React.Component {
     if (new_player.name == '')
       new_player.name = 'Unknown';
 
-    this.setState( (prevState)=>(
+    this.setState((prevState) => (
       {
         players: prevState.players.concat(new_player)
       }
     ));
-    
+
   }
 
-  calculateWinner(){
+  calculateWinner() {
     const players = this.state.players;
     const numbers = this.state.numbers;
 
-    for (let player of players){
-      if (checkArrayIntoArray(player.numbers, numbers)){
+    for (let player of players) {
+      if (checkArrayIntoArray(player.numbers, numbers)) {
         // player.isWinner = true;
-        this.setState((prevState)=>({ 
+        this.setState((prevState) => ({
           winner: true,
-          players: prevState.players.map((e)=>{
-            if (e == player){
+          players: prevState.players.map((e) => {
+            if (e == player) {
               player.isWinner = true;
               return player;
             }
-            else{
+            else {
               return e;
             }
           })
@@ -117,52 +118,56 @@ export default class Game extends React.Component {
     }
   }
 
-  generateBall(){
-    const number = all_numbers.splice(Math.random()*all_numbers.length, 1);
-    this.setState((prevState)=>({numbers: prevState.numbers.concat(number[0])}));
+  generateBall() {
+    const number = all_numbers.splice(Math.random() * all_numbers.length, 1);
+    this.setState((prevState) => ({ numbers: prevState.numbers.concat(number[0]) }));
     this.calculateWinner();
     this.startGame();
   }
 
-  startGame(){
+  startGame() {
     const players = this.state.players.length;
-    if (players == 0){
-      this.setState(()=>({ errors: 'No players available'}));
+    if (players == 0) {
+      this.setState({ errors: 'No players available' });
       return;
     }
+    this.setState({ errors: '' })
 
     let winner = this.state.winner;
-    if (!winner && all_numbers.length != 0){
-      setTimeout(()=>{
+    if (!winner && all_numbers.length != 0) {
+      setTimeout(() => {
         this.generateBall();
       }, 1000)
     }
   }
 
-  pauseGame(){
-    this.setState((prevState)=>({winner: !prevState.winner}));
+  pauseGame() {
+    this.setState((prevState) => ({ winner: !prevState.winner }));
   }
 
-  componentDidMount(){
-    for (let x= 1; x<76; x++)
+  componentDidMount() {
+    for (let x = 1; x < 76; x++)
       all_numbers.push(x);
   }
 
-  render(){
+  render() {
     return (
       <div>
         <h1>Bingo JS</h1>
-        {this.state.errors && <p>{this.state.errors}</p>}
-        <p><button className="btnStart" onClick={this.startGame}>Start game</button>{ this.state.numbers.length > 0 && <button onClick={this.pauseGame} className="btnStart" >Pause game</button>}</p>
-        <p>
-          <input placeholder="Name" id="new_player__name" ></input>
+        <div className="controls">
+          <button onClick={this.startGame}>Start game</button>
+          <button onClick={this.pauseGame} className={classnames({ 'no-display': !this.state.numbers.length })} >Pause game</button>
+        </div>
+        <div className="form">
+          <input placeholder="Player Name" id="new_player__name" ></input>
           <button onClick={this.createNewPlayer}>Add new player</button>
-        </p>
+        </div>
+        {this.state.errors && <p>{this.state.errors}</p>}
         <div>
           {this.state.numbers.length > 0 && <p>Total balotas: {this.state.numbers.length}</p>}
           <p className="boards">
-            {this.state.numbers.map((e,i)=>{
-              if (i+1 != this.state.numbers.length)
+            {this.state.numbers.map((e, i) => {
+              if (i + 1 != this.state.numbers.length)
                 return <Ball key={i} number={e} />
               else
                 return <Ball key={i} number={e} current={true} />
@@ -170,7 +175,7 @@ export default class Game extends React.Component {
           </p>
         </div>
         <div className="boards">
-          {this.state.players.map((item, index) => (<Board player={item} numbers={this.state.numbers} key={index} />))} 
+          {this.state.players.map((item, index) => (<Board player={item} numbers={this.state.numbers} key={index} />))}
         </div>
       </div>);
   }
